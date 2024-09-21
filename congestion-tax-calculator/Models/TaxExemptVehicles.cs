@@ -2,14 +2,14 @@
 {
 	public class TaxExemptVehicles
 	{
-		public int Id { get; set; }
+		public Guid Id { get; set; }
 		public string Name { get; set; } = string.Empty;
 		public bool IsExemptVehicle { get; set; }
-        public static TaxExemptVehicles Create(string name , bool IsExemptVehicle)
+        public static TaxExemptVehicles Create(Guid Id,string name , bool IsExemptVehicle)
         {
             var item = new TaxExemptVehicles
             {
-               
+               Id = Id,
                 Name = name,
                 IsExemptVehicle = IsExemptVehicle
 

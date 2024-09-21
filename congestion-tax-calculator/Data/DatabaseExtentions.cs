@@ -21,8 +21,8 @@ namespace congestion_tax_calculator.Data
             await TaxRule(context);
             await Month(context);
             await DaysOfMonth(context);
-
-            
+            await TaxRecords(context);
+            await TaxRecordsTimes(context);
         }
         private static async Task SeedWeekendDaysAsync(congestion_tax_calculatorContext context)
         {
@@ -61,6 +61,22 @@ namespace congestion_tax_calculator.Data
             if (!await context.DaysOfMonth.AnyAsync())
             {
                 await context.DaysOfMonth.AddRangeAsync(InitialData._daysofmonth);
+                await context.SaveChangesAsync();
+            }
+        }
+        private static async Task TaxRecords(congestion_tax_calculatorContext context)
+        {
+            if (!await context.TaxRecord.AnyAsync())
+            {
+                await context.TaxRecord.AddRangeAsync(InitialData._taxRecord);
+                await context.SaveChangesAsync();
+            }
+        }
+        private static async Task TaxRecordsTimes(congestion_tax_calculatorContext context)
+        {
+            if (!await context.TaxRecordTimes.AnyAsync())
+            {
+                await context.TaxRecordTimes.AddRangeAsync(InitialData._taxRecordTime);
                 await context.SaveChangesAsync();
             }
         }

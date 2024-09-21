@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using congestion_tax_calculator.Data;
+using congestion_tax_calculator.Models;
+using congestion_tax_calculator.Models.TaxRecords;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using congestion_tax_calculator.Data;
-using congestion_tax_calculator.Models.TaxRecords;
-using congestion_tax_calculator.Models;
 
 namespace congestion_tax_calculator.Controllers
 {
@@ -28,9 +24,9 @@ namespace congestion_tax_calculator.Controllers
         }
 
         // GET: TaxRecords/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
@@ -43,7 +39,10 @@ namespace congestion_tax_calculator.Controllers
                 return NotFound();
             }
             var history = await _context.TaxRecordTimes.Where(s => s.TaxRecordId.Equals(id)).Select(s=>s.Date).ToListAsync();
-            TempData["tax"]  = GetTax(taxRecord, history);
+            if (history.Count > 0)
+                TempData["tax"] = "Tax Is " + GetTax(taxRecord, history) + "!";
+            else
+                TempData["tax"] = "No Tax For This Car!";
             return View(taxRecord);
         }
 
@@ -60,20 +59,24 @@ namespace congestion_tax_calculator.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CarName,LicensePlateNumber,CarTypeId")] TaxRecord taxRecord)
         {
-
-            if (ModelState.IsValid)
+             if(string.IsNullOrEmpty(taxRecord.CarName) || string.IsNullOrEmpty(taxRecord.LicensePlateNumber) || taxRecord.CarTypeId == Guid.Empty)
             {
-                if(await _context.TaxRecord.AnyAsync(s => s.LicensePlateNumber.Equals(taxRecord.LicensePlateNumber))){
+                return RedirectToAction(nameof(Index));
+
+
+            }
+
+
+            if (await _context.TaxRecord.AnyAsync(s => s.LicensePlateNumber.Equals(taxRecord.LicensePlateNumber))){
                     return RedirectToAction(nameof(Index));
 
                 }
                 _context.Add(taxRecord);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+            
 
-            ViewData["CarTypeId"] = new SelectList(_context.TaxExemptVehicles, "Id", "Name", taxRecord.CarTypeId);
-            return View(taxRecord);
+     
         }
 
         // GET: TaxRecords/Edit/5
@@ -97,7 +100,7 @@ namespace congestion_tax_calculator.Controllers
   
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CarName,LicensePlateNumber,CarTypeId")] TaxRecord taxRecord)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,CarName,LicensePlateNumber,CarTypeId")] TaxRecord taxRecord)
         {
             if (id != taxRecord.Id)
             {
@@ -129,9 +132,9 @@ namespace congestion_tax_calculator.Controllers
         }
 
         // GET: TaxRecords/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
@@ -150,7 +153,7 @@ namespace congestion_tax_calculator.Controllers
         // POST: TaxRecords/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var taxRecord = await _context.TaxRecord.FindAsync(id);
             if (taxRecord != null)
@@ -161,14 +164,10 @@ namespace congestion_tax_calculator.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult InsertTainsertTravelTime(int id)
-        {
-         
-            return View(id);
-        }
+  
   
 
-        private bool TaxRecordExists(int id)
+        private bool TaxRecordExists(Guid id)
         {
             return _context.TaxRecord.Any(e => e.Id == id);
         }

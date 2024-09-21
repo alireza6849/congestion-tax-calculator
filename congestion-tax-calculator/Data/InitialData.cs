@@ -1,5 +1,6 @@
 ﻿using congestion_tax_calculator.Models;
 using congestion_tax_calculator.Models.Holidays;
+using congestion_tax_calculator.Models.TaxRecords;
 using Microsoft.EntityFrameworkCore;
 
 namespace congestion_tax_calculator.Data
@@ -23,8 +24,8 @@ namespace congestion_tax_calculator.Data
         public static IEnumerable<TaxExemptVehicles> t =>
     new List<TaxExemptVehicles>
     {
-      TaxExemptVehicles.Create(name:"Personal car",false),
-      TaxExemptVehicles.Create(name:"Bus",true),
+      TaxExemptVehicles.Create(Id:new Guid("292bb933-3357-443c-960d-5a6b7afaa9ab"),name:"Personal car",false),
+      TaxExemptVehicles.Create(Id:new Guid("e998960d-d158-4a12-80e6-53767c4c05d6"),name:"Bus",true),
     };
         public static IEnumerable<TaxRule> _taxrule =>
     new List<TaxRule>
@@ -66,6 +67,37 @@ namespace congestion_tax_calculator.Data
       DaysOfMonth.Create(number:1,monthid:new Guid("5334c996-8457-4cf0-815c-ed2b77c4ff61")  ),
   
         };
+        public static IEnumerable<TaxRecord> _taxRecord =>
+   new List<TaxRecord>
+   {
+      TaxRecord.Create(Id:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , CarName:"Tesla Luxury Electric Vehicles 2003-Present",LicensePlateNumber:"231Ea54",CarTypeId:new Guid("292bb933-3357-443c-960d-5a6b7afaa9ab")),
+
+   };
+        public static IEnumerable<TaxRecordTime> _taxRecordTime =>
+      new List<TaxRecordTime>
+      {
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,01,14,21,00,00) ),
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,01,15,21,00,00) ),
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,02,07,6,23,27) ),
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,02,07,15,27,00) ),
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,02,08,06,27,00) ),
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,02,08,06,20,27) ),
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,02,08,14,35,00) ),
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,02,08,15,29,00) ),
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,02,08,15,47,00) ),
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,02,08,16,01,00) ),
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,02,08,16,48,00) ),
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,02,08,17,49,00) ),
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,02,08,18,29,00) ),
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,02,08,18,35,00) ),
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,03,26,14,25,00) ),
+      TaxRecordTime.Create( taxRecordId:new Guid("cd0f0ea7-f620-4bd4-8303-3122998a4ece") , date: new DateTime(2024,03,28,14,07,27) ),
+
+
+      };
+
+
+        
     }
 
     }

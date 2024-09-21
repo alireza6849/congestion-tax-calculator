@@ -27,8 +27,7 @@ namespace congestion_tax_calculator.Migrations
                 name: "TaxExemptVehicles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsExemptVehicle = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -89,11 +88,10 @@ namespace congestion_tax_calculator.Migrations
                 name: "TaxRecord",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CarName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LicensePlateNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CarTypeId = table.Column<int>(type: "int", nullable: false)
+                    CarTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -113,7 +111,7 @@ namespace congestion_tax_calculator.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TaxRecordId = table.Column<int>(type: "int", nullable: false)
+                    TaxRecordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {

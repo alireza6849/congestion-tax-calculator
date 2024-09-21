@@ -12,7 +12,7 @@ using congestion_tax_calculator.Data;
 namespace congestion_tax_calculator.Migrations
 {
     [DbContext(typeof(congestion_tax_calculatorContext))]
-    [Migration("20240921095835_init1")]
+    [Migration("20240921144831_init1")]
     partial class init1
     {
         /// <inheritdoc />
@@ -62,11 +62,9 @@ namespace congestion_tax_calculator.Migrations
 
             modelBuilder.Entity("congestion_tax_calculator.Models.TaxExemptVehicles", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsExemptVehicle")
                         .HasColumnType("bit");
@@ -82,18 +80,16 @@ namespace congestion_tax_calculator.Migrations
 
             modelBuilder.Entity("congestion_tax_calculator.Models.TaxRecords.TaxRecord", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CarName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CarTypeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CarTypeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LicensePlateNumber")
                         .IsRequired()
@@ -117,8 +113,8 @@ namespace congestion_tax_calculator.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TaxRecordId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("TaxRecordId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
